@@ -1,0 +1,64 @@
+<html xmlns:py="http://genshi.edgewall.org/">
+	<head>
+		<style>
+@page {
+    size: A4 landscape; /*21cm 29.7cm */
+    margin: 15mm 5mm;
+}
+.tickets div {
+	border : 2px dashed grey;
+	width : calc(50% - 6mm);
+	box-sizing : border-box;
+	display : inline-block;
+	height : 45%;
+	margin : 2mm;
+	padding : 2mm;
+	overflow : hidden;
+	position : relative;
+}
+.tickets div:before {
+	content : "#" attr(data-id);
+	font-size : 16px;
+	font-weight : bold;
+	color : grey;
+}
+
+.tickets div:after {
+	content : attr(data-hours) "h";
+	font-size : 16px;
+	font-weight : bold;
+	position : absolute;
+	top : 2mm;
+	right : 2mm;
+	color : grey;
+}
+.tickets div:nth-child(4n) {
+	page-break-after : always;
+}
+body {
+	font-family : Arial;
+}
+h3 {
+	text-align : center;
+	margin : 0 2mm;
+	white-space : nowrap;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	font-size : 1em;
+}
+p {
+	font-size : 0.95em;
+}
+
+		</style>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+		<div class="tickets">
+			<div data-id="${ticket['id']}" data-hours="${ticket['estimatedhours']}" py:for="ticket in tickets">
+				<h3>${ticket['summary']}</h3>
+				<p>${ticket['description']} </p>
+			</div>
+		</div>
+	</body>
+</html>
